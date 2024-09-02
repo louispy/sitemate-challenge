@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import List from "@mui/material/List";
 import axios from "axios";
 import "./App.css";
-import { Box, Button, ListItem, Modal, TextField } from "@mui/material";
+import { Box, Button, ListItem, Modal, TextField, Typography } from "@mui/material";
 
 const modalStyle = {
   position: "absolute",
@@ -62,10 +62,24 @@ function App() {
   };
 
   const updateIssue = async (toUpdate) => {
-    console.log(id, title, description, "http://localhost:5000/issue/" + toUpdate);
+    console.log(id, title, description);
     await axios({
       method: "PATCH",
       url: "http://localhost:5000/issue/" + id,
+      data: {
+        id,
+        title,
+        description,
+      },
+    });
+    await getIssues();
+    setOpenUpdate(false);
+  };
+
+  const deleteIssue = async (toDelete) => {
+    await axios({
+      method: "DELETE",
+      url: "http://localhost:5000/issue/" + toDelete,
       data: {
         id,
         title,
@@ -101,7 +115,10 @@ function App() {
               {issue.title}
             </Button>
             <br />
-            {issue.description}
+            <Typography variant="body1">{issue.description}</Typography>
+            <Button style={buttonStyle} color="warning" onClick={() => deleteIssue(issue.id)}>
+              X
+            </Button>
           </ListItem>
         ))}
       </List>
