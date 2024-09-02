@@ -22,6 +22,13 @@ app.get("/issue", (req, res) => {
   res.status(200).json({ message: "Success", data: [mockIssue] });
 });
 
+app.patch("/issue/:id", (req, res) => {
+  console.log('to be updated id:', req.params.id);
+  const issue: Issue = req.body;
+  console.log(issue);
+  res.status(200).json({ message: "Success", data: issue });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
