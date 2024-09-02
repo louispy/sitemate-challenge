@@ -1,12 +1,14 @@
 import express from "express";
 import { Issue } from "./models/issue";
 import cors from 'cors';
+import morgan from 'morgan';
 
 const app = express();
 const port = 5000;
 
 app.use(express.json());
 app.use(cors());
+app.use(morgan('tiny'))
 
 app.get("/", (req, res) => {
   res.send("Hello, TypeScript Node Express!");
